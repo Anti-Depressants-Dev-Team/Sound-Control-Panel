@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist-renderer/
+release/
+
+# Native bridge build
+native/bin/
+native/AudioBridge/bin/
+native/AudioBridge/obj/
+
+# Logs
+*.log
+build_log.txt
+build_output.txt
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo

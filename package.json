@@ -1,0 +1,67 @@
+{
+  "name": "sound-control-panel",
+  "version": "1.0.0",
+  "description": "A modern replacement for the Windows Sound Manager",
+  "author": "Yabosen",
+  "main": "main/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:electron\"",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "build": "vite build",
+    "start": "npm run build && electron .",
+    "build:native": "dotnet publish native/AudioBridge/AudioBridge.csproj -c Release -r win-x64 --self-contained false -o native/bin",
+    "dist": "npm run build && electron-builder --win"
+  },
+  "build": {
+    "appId": "com.yabosen.sound-control-panel",
+    "productName": "Sound Control Panel",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main/**/*",
+      "dist-renderer/**/*",
+      "icon.png"
+    ],
+    "extraResources": [
+      {
+        "from": "native/bin/",
+        "to": "native",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^26.8.1",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3",
+    "wait-on": "^8.0.1"
+  }
+}
